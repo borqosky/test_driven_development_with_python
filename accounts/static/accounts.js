@@ -7,7 +7,7 @@ var initialize = function (navigator, user, token, urls) {
     navigator.id.watch({
         loggedInUser: user,
         onlogin: function(assertion) {
-            var deferred =$.post(
+            var deferred = $.post(
                 urls.login, {assertion: assertion, csrfmiddlewaretoken: token }
             );
             deferred.done(function() { window.location.reload(); });
