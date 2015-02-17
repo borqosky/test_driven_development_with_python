@@ -37,8 +37,8 @@ class ListPage(object):
         self.test = test
 
     def get_list_table_rows(self):
-        return self.test.browser.find_element_by_css_selector(
-            '#id_list_table_tr'
+        return self.test.browser.find_elements_by_css_selector(
+            '#id_list_table tr'
         )
 
     def wait_for_new_item_in_list(self, item_text, position):
