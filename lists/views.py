@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import get_user_model
+from django.core.validators import validate_email
+from django.forms import ValidationError
 
 from lists.models import List
 from lists.forms import ItemForm, ExistingListItemForm, NewListForm
@@ -34,3 +36,14 @@ def new_list(request):
 def my_lists(request, email):
     owner = User.objects.get(email=email)
     return render(request, 'my_lists.html', {'owner': owner})
+
+
+def share_list(request, list_id):
+    list_ = List.objects.get(id=list_id)
+    try:
+        validate_email(request.POST['email'])
+        list_.shared_with.add(request.POST['email'])
+    except ValidationError:
+        pass
+
+    return redirect(list_)
